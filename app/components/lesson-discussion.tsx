@@ -35,9 +35,11 @@ function KeptMountedPanel({
   );
 }
 
+const HEADING_ID = "lesson-discussion-heading";
+
 function DiscussionTabsList({ tabs }: { tabs: DiscussionTab[] }) {
   return (
-    <TabsList>
+    <TabsList aria-labelledby={HEADING_ID}>
       {tabs.map(({ value, label, badge }) => {
         const Icon = TAB_ICONS[value];
         return (
@@ -79,6 +81,11 @@ export function LessonDiscussion({
   return (
     <Card className="mb-8">
       <CardContent className="p-6">
+        {/* The tabs replaced the panel's visible headings; this keeps the
+            section reachable by heading navigation. */}
+        <h2 id={HEADING_ID} className="sr-only">
+          Discussion and notes
+        </h2>
         <Tabs defaultValue="discussion" className="gap-4">
           <DiscussionTabsList tabs={tabs} />
 
