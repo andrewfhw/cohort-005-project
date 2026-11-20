@@ -1,15 +1,13 @@
 import { MessageSquare, NotebookPen } from "lucide-react";
 import { Card, CardContent } from "~/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import {
-  CommentThread,
-  type RenderedComment,
-} from "~/components/comment-thread";
+import { CommentThread } from "~/components/comment-thread";
 import { LessonNote, type LessonNoteData } from "~/components/lesson-note";
 import {
   lessonDiscussionTabs,
   type DiscussionTab,
   type DiscussionTabValue,
+  type RenderedComment,
 } from "~/modules/lesson-discussion";
 
 const TAB_ICONS: Record<DiscussionTabValue, typeof MessageSquare> = {

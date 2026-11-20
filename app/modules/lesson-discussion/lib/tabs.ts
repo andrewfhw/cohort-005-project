@@ -16,15 +16,17 @@ export function countVisibleComments(comments: CountableComment[]): number {
   );
 }
 
+export type DiscussionTabsInput = {
+  comments: CountableComment[];
+  hasNote: boolean;
+  canTakeNotes: boolean;
+};
+
 export function lessonDiscussionTabs({
   comments,
   hasNote,
   canTakeNotes,
-}: {
-  comments: CountableComment[];
-  hasNote: boolean;
-  canTakeNotes: boolean;
-}): DiscussionTab[] {
+}: DiscussionTabsInput): DiscussionTab[] {
   const count = countVisibleComments(comments);
   const discussion: DiscussionTab = {
     value: "discussion",
