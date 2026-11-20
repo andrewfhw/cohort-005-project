@@ -11,7 +11,7 @@ import {
 import { CourseStatus } from "~/db/schema";
 import { BookOpen, ArrowRight, User, Moon, Sun } from "lucide-react";
 import { CourseImage } from "~/components/course-image";
-import { LandingHero, LandingStats } from "~/components/landing";
+import { LandingFooter, LandingHero, LandingStats } from "~/components/landing";
 import { DevUI } from "~/components/dev-ui";
 import { getCurrentUserId, getDevCountry } from "~/lib/session";
 import { getCountryTierInfo, COUNTRIES } from "~/lib/ppp";
@@ -292,11 +292,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </section>
       )}
 
-      <footer className="border-t border-border py-8">
-        <div className="mx-auto max-w-6xl px-6 text-left text-sm text-muted-foreground">
-          Cadence
-        </div>
-      </footer>
+      <LandingFooter />
 
       <DevUI
         users={users}

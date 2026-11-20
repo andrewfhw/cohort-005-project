@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import type { ReactElement } from "react";
-import { LandingHero, LandingStats } from "./landing";
+import { LandingFooter, LandingHero, LandingStats } from "./landing";
 
 function render(element: ReactElement) {
   const router = createMemoryRouter([{ path: "/", element }]);
@@ -54,5 +54,13 @@ describe("LandingStats", () => {
         render(<LandingStats totalCourses={1} totalCategories={1} />)
       )
     ).toEqual([]);
+  });
+});
+
+describe("LandingFooter", () => {
+  it("left-aligns the product name", () => {
+    const page = render(<LandingFooter />);
+    expect(page.html).toContain(">Cadence<");
+    expect(centredBlocks(page)).toEqual([]);
   });
 });
