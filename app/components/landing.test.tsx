@@ -7,44 +7,52 @@ import { LandingHero, LandingStats } from "./landing";
 function render(element: ReactElement) {
   const router = createMemoryRouter([{ path: "/", element }]);
   const html = renderToStaticMarkup(<RouterProvider router={router} />);
-  return { html, has: (text: string) => html.includes(text) };
+  const classLists = [...html.matchAll(/class="([^"]*)"/g)].map(([, classes]) =>
+    classes.split(/\s+/)
+  );
+  const withClass = (name: string) =>
+    classLists.filter((classes) => classes.includes(name));
+  return { html, withClass };
+}
+
+function centredBlocks(page: ReturnType<typeof render>) {
+  const autoCentred = page
+    .withClass("mx-auto")
+    .filter((classes) => !classes.includes("max-w-6xl"));
+  return [...page.withClass("text-center"), ...autoCentred];
 }
 
 describe("LandingHero", () => {
   it("left-aligns the headline, copy and call to action", () => {
     const page = render(<LandingHero />);
-    expect(page.has("text-center")).toBe(false);
-    expect(page.has("mx-auto mt-6")).toBe(false);
-    expect(page.has('class="mx-auto max-w-6xl px-6 py-24 text-left"')).toBe(
-      true
-    );
-    expect(
-      page.has('class="mt-10 flex items-center justify-start gap-4"')
-    ).toBe(true);
+    expect(centredBlocks(page)).toEqual([]);
+    const centredRows = page
+      .withClass("flex")
+      .filter((classes) => classes.includes("justify-center"));
+    expect(centredRows).toEqual([]);
   });
 
   it("links the call to action to the course catalogue", () => {
-    const page = render(<LandingHero />);
-    expect(page.has('href="/courses"')).toBe(true);
-    expect(page.has("Browse Courses")).toBe(true);
+    const { html } = render(<LandingHero />);
+    expect(html).toMatch(/<a [^>]*href="\/courses"[^>]*>Browse Courses/);
   });
 });
 
 describe("LandingStats", () => {
   it("shows the course and category counts with their labels", () => {
-    const page = render(<LandingStats totalCourses={7} totalCategories={3} />);
-    expect(page.html).toMatch(/>7<\/p><p[^>]*>Available Courses</);
-    expect(page.html).toMatch(/>3<\/p><p[^>]*>Categories</);
-    expect(page.html).toMatch(
-      />Self-paced<\/p><p[^>]*>Learn on your schedule</
+    const { html } = render(
+      <LandingStats totalCourses={7} totalCategories={3} />
     );
+    expect(html).toMatch(/>7<\/p><p[^>]*>Available Courses</);
+    expect(html).toMatch(/>3<\/p><p[^>]*>Categories</);
+    expect(html).toMatch(/>Self-paced<\/p><p[^>]*>Learn on your schedule</);
   });
 
-  it("left-aligns each stat beside its icon", () => {
-    const page = render(<LandingStats totalCourses={1} totalCategories={1} />);
-    expect(page.has("text-center")).toBe(false);
-    expect(page.html.match(/flex items-center gap-4 text-left/g)).toHaveLength(
-      3
-    );
+  it("left-aligns each stat", () => {
+    expect(
+      centredBlocks(
+        render(<LandingStats totalCourses={1} totalCategories={1} />)
+      )
+    ).toEqual([]);
   });
 });

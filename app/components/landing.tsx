@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button";
 
 export function LandingHero() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24 text-left">
+    <section className="mx-auto max-w-6xl px-6 py-24">
       <div className="max-w-3xl">
         <p className="text-sm font-semibold uppercase tracking-wider text-primary">
           Courses for developers
@@ -18,7 +18,7 @@ export function LandingHero() {
           Structured courses built by experienced instructors. Track your
           progress, take quizzes, and build real-world skills.
         </p>
-        <div className="mt-10 flex items-center justify-start gap-4">
+        <div className="mt-10 flex items-center gap-4">
           <Button asChild size="lg">
             <Link to="/courses">
               Browse Courses
@@ -48,7 +48,7 @@ export function LandingStats({
     <section className="border-y border-border bg-muted/50 py-12">
       <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 sm:grid-cols-3">
         {stats.map(({ icon: Icon, value, label }) => (
-          <li key={label} className="flex items-center gap-4 text-left">
+          <li key={label} className="flex items-center gap-4">
             <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <Icon className="size-6 text-primary" />
             </div>
